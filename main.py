@@ -1,5 +1,7 @@
 from api import api
 
 if __name__ == '__main__':
-    a = api('username', 'password')
-    print(a.querycj('2018-2019-1'))
+    a = api('17690208', '188550')
+    a.querykb()
+
+

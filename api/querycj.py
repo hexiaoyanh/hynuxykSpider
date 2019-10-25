@@ -23,8 +23,11 @@ class querycj(login):
         url = "http://59.51.24.46/hysf/xszqcjglAction.do?method=queryxscj"
         data = requests.post(url=url, cookies=self.cookie, data=payload)
         soup = BeautifulSoup(data.text, 'html.parser')
-        many = int(soup.find(id='PageNavigation').font.text)
-        many = math.ceil(many / 10)
+        try:
+            many = int(soup.find(id='PageNavigation').font.text)
+            many = math.ceil(many / 10)
+        except AttributeError:
+            raise EnvironmentError
         return {
             'toatalPage': many,
             'soup': soup
@@ -132,7 +135,8 @@ class querycj(login):
             data = dict(data, **temp)
         return data
 
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-        super().__init__(username, password)
+    def __init__(self, *args):
+        if len(args) == 2:
+            super().__init__(str(args[0]), str(args[1]))
+        else:
+            self.cookie = args[0]

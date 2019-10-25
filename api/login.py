@@ -1,5 +1,6 @@
 import requests
-from ocr import ocr
+
+from api.ocr import ocr
 
 
 class login:
@@ -43,4 +44,3 @@ class login:
         self.username = username
         self.password = password
         self.login()
-
