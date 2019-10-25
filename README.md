@@ -6,12 +6,14 @@
 ```python
 from api import api
 a = api('Usernme','Password')
-print(a.querycj('Date(2018-2019-2)'))
+print(a.querycj('2018-2019-2'))
+#时间
 ```
 
 ## 查询课表
 ```python
 from api import api
 a = api('Username','Password')
-print(a.querykb('Date(2018-2019-2)','Week(1)'))
+print(a.querykb('2018-2019-2','1'))
+#时间和第几周
 ```
