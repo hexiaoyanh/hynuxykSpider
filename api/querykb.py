@@ -1,3 +1,5 @@
+import json
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -5,7 +7,7 @@ from api.login import login
 
 
 class querykb(login):
-    url = "http://59.51.24.46/hysf/tkglAction.do?method=goListKbByXs&istsxx=no&xnxqh=2019-2020-1&zc=&xs0101"
+    url = None
 
     def postrequests(self):
         data = requests.post(url=self.url, cookies=self.cookie)
@@ -13,16 +15,22 @@ class querykb(login):
         return soup
 
     def dealdata(self, soup):
-        table = soup.find(id='kbtable').find_all('tr')[1:]
-        table = table[:-1]
-        #for i in table:
-        td = table[0].find_all('td')
-        print(td[5].find_all('div')[1])
+        data = []
+        for i in range(1, 6):
+            for j in range(1, 8):
+                week = []
+                for k in range(1, 4):
+                    strs = "{0}-{1}-{2}".format(i, j, k)
+                    temp = {strs: soup.find(id=strs).text.replace('\xa0', '')}
+                    week.append(temp)
+                data.append(week)
+        return json.dumps(data,ensure_ascii=False)
 
-
-    def queryallkb(self):
+    def queryallkb(self, date, week):
+        self.url = "http://59.51.24.46/hysf/tkglAction.do?method=goListKbByXs&istsxx=no&xnxqh={0}&zc={1}&xs0101".format(
+            date, week)
         soup = self.postrequests()
-        self.dealdata(soup)
+        return self.dealdata(soup)
 
     def __init__(self, *args):
         if len(args) == 2:

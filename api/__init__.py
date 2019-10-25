@@ -6,12 +6,13 @@ from api.querykb import querykb
 
 class api:
     cookie = None
+
     def querycj(self, date):
         jsons = self.querygrade.queryallcj(date)
         return json.dumps(jsons, ensure_ascii=False)
 
-    def querykb(self):
-        self.querykebiao.queryallkb()
+    def querykb(self, date, week):
+        return self.querykebiao.queryallkb(date, week)
 
     def __init__(self, *args):
         if len(args) == 2:
