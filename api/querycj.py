@@ -139,4 +139,8 @@ class querycj(login):
         if len(args) == 2:
             super().__init__(str(args[0]), str(args[1]))
         else:
-            self.cookie = {'JSESSIONID': args[0]}
+            if type(args[0]) == dict:
+                self.cookie = args[0]
+            else:
+                self.cookie = {'JSESSIONID': args[0]}
+
