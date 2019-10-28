@@ -25,3 +25,4 @@ class api:
         else:
             self.querygrade = querycj(args[0])
             self.querykebiao = querykb(args[0])
+            self.cookie = {'JSESSIONID': args[0]}

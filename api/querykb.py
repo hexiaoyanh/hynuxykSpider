@@ -46,4 +46,4 @@ class querykb(login):
         if len(args) == 2:
             super().__init__(args[0], args[1])
         else:
-            self.cookie = args[0]
+            self.cookie = {'JSESSIONID': args[0]}
