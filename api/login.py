@@ -1,6 +1,6 @@
 import requests
 
-from api.ocr import ocr
+from .ocr import ocr
 
 
 class login:

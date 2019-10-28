@@ -2,7 +2,7 @@ import re
 
 import requests
 
-from api.login import login
+from .login import login
 from bs4 import BeautifulSoup
 import math
 

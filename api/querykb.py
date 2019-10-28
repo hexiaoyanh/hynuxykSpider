@@ -3,7 +3,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-from api.login import login
+from .login import login
 
 
 class querykb(login):

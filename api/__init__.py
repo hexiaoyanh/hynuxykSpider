@@ -1,7 +1,7 @@
 import json
 
-from api.querycj import querycj
-from api.querykb import querykb
+from .querycj import querycj
+from .querykb import querykb
 
 
 class api:
