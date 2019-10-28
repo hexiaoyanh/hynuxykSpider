@@ -14,6 +14,9 @@ class api:
     def querykb(self, date, week):
         return self.querykebiao.queryallkb(date, week)
 
+    def getcookie(self):
+        return self.cookie
+
     def __init__(self, *args):
         if len(args) == 2:
             self.querygrade = querycj(args[0], args[1])
