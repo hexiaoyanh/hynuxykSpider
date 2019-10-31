@@ -96,16 +96,7 @@ class querycj(login):
         return self.dealsoup(soup)
 
     ############################################查询成绩2 end#######################################
-    ############################################查询平时成绩 begin###################################
-    def querypscj(self, urls):
-        urls = "http://59.51.24.46" + re.search("'.*'", urls).group(0).replace("'", "")
-        data = requests.get(url=urls, cookies=self.cookie)
-        soup = BeautifulSoup(data.text, 'html.parser')
-        data = soup.find(id="mxhDiv")
-        data = data.find_all('td')
-        return [data[0].text, data[1].text, data[4].text, data[5].text, data[6].text]
-        
-    ############################################查询平时成绩 end###################################
+
 
     def dealsoup(self, soup):
         try:
@@ -123,7 +114,7 @@ class querycj(login):
                 'beginDate': td[3].text,  # 开始日期
                 'className': td[4].text,  # 课程名
                 'grade': td[5].a.text,  # 成绩
-                'gradeDetail': self.querypscj(td[5].a['onclick']),  # 成绩详情地址td[5].a['onclick']
+                'gradeDetail': td[5].a['onclick'],  # 成绩详情地址td[5].a['onclick']
                 'gradeFlag': td[6].text,  # 成绩标志
                 'courseNature': td[7].text,  # 课程性质
                 'courseCategory': td[8].text,  # 课程类别

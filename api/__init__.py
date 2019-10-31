@@ -1,5 +1,6 @@
 import json
 
+from main.hynuxykSpider.api.queryqxcj import querypscj
 from .querycj import querycj
 from .querykb import querykb
 
@@ -13,6 +14,9 @@ class api:
 
     def querykb(self, date, week):
         return self.querykebiao.queryallkb(date, week)
+
+    def querypscj(self, url):
+        return querypscj(url, self.cookie)
 
     def getcookie(self):
         return self.cookie
