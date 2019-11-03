@@ -7,7 +7,7 @@ from .querykb import querykb
 
 class api:
     cookie = None
-
+    Msg = ""
     def querycj(self, date):
         jsons = self.querygrade.queryallcj(date)
         return json.dumps(jsons, ensure_ascii=False)
@@ -21,10 +21,14 @@ class api:
     def getcookie(self):
         return self.cookie
 
+    def getmsg(self):
+        return self.Msg
+
     def __init__(self, *args):
         if len(args) == 2:
             self.querygrade = querycj(args[0], args[1])
             self.cookie = self.querygrade.cookie
+            self.Msg = self.querygrade.Msg
             self.querykebiao = querykb(self.cookie)
         else:
             self.querygrade = querycj(args[0])

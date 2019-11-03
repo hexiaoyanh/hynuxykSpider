@@ -1,11 +1,12 @@
 import requests
+from bs4 import BeautifulSoup
 
 from .ocr import ocr
 
 
 class login:
     cookie = None
-
+    Msg = ""
     ############################################login begin############################################
     def setcookie(self):
         url = "http://59.51.24.46/hysf/"
@@ -33,7 +34,13 @@ class login:
         }
         url = "http://59.51.24.46/hysf/Logon.do?method=logon"
         data = requests.post(url=url, cookies=self.cookie, data=payload)
-        self.getmsg()
+        bs = BeautifulSoup(data.text,'html.parser')
+        error = bs.find(id='errorinfo')
+        if error is not None:
+            return error.text
+        else:
+            self.getmsg()
+            return "OK"
 
     def getmsg(self):
         url = "http://59.51.24.46/hysf/Logon.do?method=logonBySSO"
@@ -43,4 +50,4 @@ class login:
     def __init__(self, username, password):
         self.username = username
         self.password = password
-        self.login()
+        self.Msg = self.login()
