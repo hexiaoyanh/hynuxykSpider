@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 import math
 
 
-class querycj(login):
+class querycj():
     flag = 0
 
     ############################################查询成绩1 begin#######################################
@@ -20,8 +20,10 @@ class querycj(login):
             'ok': '',
             'xsfs': 'qbcj'
         }
-
-        url = "http://59.51.24.46/hysf/xszqcjglAction.do?method=queryxscj"
+        if self.nanyue is True:
+            url = "http://59.51.24.41/xszqcjglAction.do?method=queryxscj"
+        else:
+            url = "http://59.51.24.46/hysf/xszqcjglAction.do?method=queryxscj"
         data = requests.post(url=url, cookies=self.cookie, data=payload)
         soup = BeautifulSoup(data.text, 'html.parser')
         try:
@@ -84,7 +86,10 @@ class querycj(login):
         }
 
     def querycj2(self, soup, PageNum):
-        url = "http://59.51.24.46/hysf/xszqcjglAction.do?method=queryxscj"
+        if self.nanyue is True:
+            url = "http://59.51.24.41/xszqcjglAction.do?method=queryxscj"
+        else:
+            url = "http://59.51.24.46/hysf/xszqcjglAction.do?method=queryxscj"
         json = self.setjson(soup, PageNum)
         data = requests.post(url=url, cookies=self.cookie, data=json)
         data = re.search('window\.parent\.document\.getElementById\(\'mxhDiv\'\)\.innerHTML = [\s\S]*?<\/table>',
@@ -96,7 +101,6 @@ class querycj(login):
         return self.dealsoup(soup)
 
     ############################################查询成绩2 end#######################################
-
 
     def dealsoup(self, soup):
         try:
@@ -136,11 +140,6 @@ class querycj(login):
             data = dict(data, **temp)
         return data
 
-    def __init__(self, *args):
-        if len(args) == 2:
-            super().__init__(str(args[0]), str(args[1]))
-        else:
-            if type(args[0]) == dict:
-                self.cookie = args[0]
-            else:
-                self.cookie = {'JSESSIONID': args[0]}
+    def __init__(self, cookie, nanyue):
+        self.cookie = {'JSESSIONID': cookie}
+        self.nanyue = nanyue

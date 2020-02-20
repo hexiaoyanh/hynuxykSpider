@@ -6,9 +6,12 @@ from bs4 import BeautifulSoup
 from flask import jsonify
 
 
-def querypscj(urls, cookie):
-    urls = "http://59.51.24.46" + re.search("'.*'", urls).group(0).replace("'", "")
-    data = requests.get(url=urls, cookies=cookie)
+def querypscj(urls, cookie, nanyue):
+    if nanyue is True:
+        urls = "http://59.51.24.41" + re.search("'.*'", urls).group(0).replace("'", "")
+    else:
+        urls = "http://59.51.24.46" + re.search("'.*'", urls).group(0).replace("'", "")
+    data = requests.get(url=urls, cookies={'JSESSIONID': cookie})
     soup = BeautifulSoup(data.text, 'html.parser')
     data = soup.find(id="mxhDiv")
     data = data.find_all('td')

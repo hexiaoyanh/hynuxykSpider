@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from .login import login
 
 
-class querykb(login):
+class querykb():
     url = None
 
     def postrequests(self):
@@ -38,17 +38,15 @@ class querykb(login):
         return json.dumps(data, ensure_ascii=False)
 
     def queryallkb(self, date, week):
-        self.url = "http://59.51.24.46/hysf/tkglAction.do?method=goListKbByXs&istsxx=no&xnxqh={0}&zc={1}&xs0101".format(
-            date, week)
+        if self.nanyue is True:
+            self.url = self.url = "http://59.51.24.41/tkglAction.do?method=goListKbByXs&istsxx=no&xnxqh={0}&zc={1}&xs0101".format(
+                date, week)
+        else:
+            self.url = "http://59.51.24.46/hysf/tkglAction.do?method=goListKbByXs&istsxx=no&xnxqh={0}&zc={1}&xs0101".format(
+                date, week)
         soup = self.postrequests()
         return self.dealdata(soup)
 
-    def __init__(self, *args):
-        if len(args) == 2:
-            super().__init__(args[0], args[1])
-        else:
-            # 用户传入的参数为字符串，用户名为dict
-            if type(args[0]) == dict:
-                self.cookie = args[0]
-            else:
-                self.cookie = {'JSESSIONID': args[0]}
+    def __init__(self, cookie, nanyue):
+        self.cookie = {'JSESSIONID': cookie}
+        self.nanyue = nanyue
