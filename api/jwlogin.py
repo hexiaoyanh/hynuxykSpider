@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from .ocr import ocr
 
 
-class login:
+class jwlogin:
     cookie = None
     Msg = ""
 
