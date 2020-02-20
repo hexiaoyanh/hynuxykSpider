@@ -3,7 +3,6 @@ from time import sleep
 
 import requests
 
-from .login import login
 from bs4 import BeautifulSoup
 import math
 
