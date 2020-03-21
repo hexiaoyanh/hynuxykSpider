@@ -11,7 +11,10 @@ import re
 class findpassword:
 
     def resetPasswd(self):
-        url = "http://59.51.24.46/hysf/yhxigl.do?method=resetPasswd"
+        if self.nanyue is True:
+            url = url = "http://59.51.24.41/yhxigl.do?method=resetPasswd"
+        else:
+            url = "http://59.51.24.46/hysf/yhxigl.do?method=resetPasswd"
         data = {
             "account": self.username,
             "sfzjh": self.idcardnum
@@ -29,9 +32,7 @@ class findpassword:
                 "Msg": "学号或身份证号错误"
             }
 
-    def findpassword(self):
-        return self.resetPasswd()
-
-    def __init__(self, username, idcardnum):
+    def __init__(self, username, idcardnum, nanyue):
         self.username = username
         self.idcardnum = idcardnum
+        self.nanyue = nanyue
