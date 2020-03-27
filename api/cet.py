@@ -42,6 +42,10 @@ class cet:
             }
         except Exception as e:
             print("Imgae_Error:", e.args)
+            return {
+                "code": "-1",
+                "msg": e.args
+            }
 
     def get_score(self, capcha, cookies):
         headers = {
@@ -64,13 +68,19 @@ class cet:
         }
         data = urlencode(data)
         response = requests.get(query_url, params=data, headers=headers, cookies={"verify": cookies})
-        print(response.text)
         if 'error' in response.text:
             e = re.compile("'error':'(.*?)'|error:'(.*?)'").findall(response.text)[0]
-            return {
-                "code":"-1",
-                "msg":e[0]
-            }
+            if e is not None:
+                if '验证码错误' in e[1]:
+                    return {
+                        "code":"-1",
+                        "msg":e[1]
+                    }
+                else:
+                    return {
+                        "code": "-1",
+                        "msg": e[0]
+                    }
         else:
             id_num = re.compile("z:'(.*?)'").findall(response.text)[0]
             name = re.compile("n:'(.*?)'").findall(response.text)[0]
