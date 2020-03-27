@@ -15,7 +15,7 @@ class elective:
             url = "http://59.51.24.41/xkglAction.do?method=xsxkXsxk"
         else:
             url = "http://59.51.24.46/hysf/xkglAction.do?method=xsxkXsxk"
-        data = requests.get(url, cookies=self.cookie)
+        data = requests.get(url, cookies=self.cookie, timeout=15)
         bs = BeautifulSoup(data.text, 'html.parser')
         try:
             table = bs.find(id='mxh')
@@ -42,7 +42,7 @@ class elective:
             url = "http://59.51.24.41/xkglAction.do?method=toFindxskxkclb&xnxq01id="+data+"&zzdxklbname=1&type=1&jx02kczid=null"
         else:
             url = "http://59.51.24.46/hysf/xkglAction.do?method=toFindxskxkclb&xnxq01id="+data+"&zzdxklbname=1&type=1&jx02kczid=null"
-        data = requests.get(url,cookies=self.cookie)
+        data = requests.get(url,cookies=self.cookie, timeout=15)
         bs = BeautifulSoup(data.text, 'html.parser')
         try:
             table = bs.find(id='mxh')
@@ -77,7 +77,7 @@ class elective:
             urls = "http://59.51.24.41" + re.search("'.*'", url).group(0).replace("'", "")
         else:
             urls = "http://59.51.24.46" + re.search("'.*'", url).group(0).replace("'", "")
-        data = requests.get(urls,cookies=self.cookie)
+        data = requests.get(urls,cookies=self.cookie, timeout=15)
         msg = re.search("'.*'", data.text[35:]).group(0).replace("'", "")
         return msg
 
