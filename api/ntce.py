@@ -64,18 +64,11 @@ class ntce:
         response = requests.post(query_url, data=params, headers=headers,
                                  cookies={"verify": cookies, "esessionid": esessionid})
         if '抱歉' in response.text:
-            e = re.compile("'error':'(.*?)'|error:'(.*?)'").findall(response.text)[0]
-            if e is not None:
-                if '验证码错误' in e[1]:
-                    return {
-                        "code": "-1",
-                        "msg": e[1]
-                    }
-                else:
-                    return {
-                        "code": "-1",
-                        "msg": e[0]
-                    }
+            e = re.compile("('.*?')").findall(response.text)[2].replace("'","")
+            return {
+                "code": "-1",
+                "msg": e
+            }
         else:
             bs = BeautifulSoup(response.text, 'html.parser')
             table = bs.find_all('table')

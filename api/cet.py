@@ -73,8 +73,8 @@ class cet:
             if e is not None:
                 if '验证码错误' in e[1]:
                     return {
-                        "code":"-1",
-                        "msg":e[1]
+                        "code": "-1",
+                        "msg": e[1]
                     }
                 else:
                     return {
@@ -94,10 +94,11 @@ class cet:
                 "id_num": str(id_num),
                 "name": str(name),
                 "school": str(school),
-                "score": str(school),
+                "score": str(score),
                 "listending": str(listening),
                 "reading": str(reading),
-                "writing": str(writing)
+                "writing": str(writing),
+                "rank": str(rank)
             }
             return jsons
 
