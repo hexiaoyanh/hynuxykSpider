@@ -25,11 +25,9 @@ class querycj():
             url = "http://59.51.24.46/hysf/xszqcjglAction.do?method=queryxscj"
         data = requests.post(url=url, cookies=self.cookie, data=payload)
         soup = BeautifulSoup(data.text, 'html.parser')
-        try:
-            many = int(soup.find(id='PageNavigation').font.text)
-            many = math.ceil(many / 10)
-        except AttributeError:
-            raise EnvironmentError
+
+        many = int(soup.find(id='PageNavigation').font.text)
+        many = math.ceil(many / 10)
         return {
             'toatalPage': many,
             'soup': soup
@@ -110,29 +108,53 @@ class querycj():
         json = {}
         for i in tr:
             td = i.find_all('td')
-            temp = {
-                'id': str(int(td[0].text)),  # 序号
-                'studentID': td[1].text,  # 学号
-                'name': td[2].text,  # 姓名
-                'beginDate': td[3].text,  # 开始日期
-                'className': td[4].text,  # 课程名
-                'grade': td[5].a.text,  # 成绩
-                'gradeDetail': td[5].a['onclick'],  # 成绩详情地址td[5].a['onclick']
-                'gradeFlag': td[6].text,  # 成绩标志
-                'courseNature': td[7].text,  # 课程性质
-                'courseCategory': td[8].text,  # 课程类别
-                'classHour': td[9].text,  # 学时
-                'classgrade': td[10].text,  # 学分
-                'examinationNature': td[11].text,  # 考试性质
-                'other': td[12].text  # 补重学期
-            }
+            try:
+                temp = {
+                    'id': str(int(td[0].text)),  # 序号
+                    'studentID': td[1].text,  # 学号
+                    'name': td[2].text,  # 姓名
+                    'beginDate': td[3].text,  # 开始日期
+                    'className': td[4].text,  # 课程名
+                    'grade': td[5].a.text,  # 成绩
+                    'gradeDetail': td[5].a['onclick'],  # 成绩详情地址td[5].a['onclick']
+                    'gradeFlag': td[6].text,  # 成绩标志
+                    'courseNature': td[7].text,  # 课程性质
+                    'courseCategory': td[8].text,  # 课程类别
+                    'classHour': td[9].text,  # 学时
+                    'classgrade': td[10].text,  # 学分
+                    'examinationNature': td[11].text,  # 考试性质
+                    'other': td[12].text  # 补重学期
+                }
+            except IndexError:
+                temp = {
+                    'id': str(int(td[0].text)),  # 序号
+                    'studentID': td[1].text,  # 学号
+                    'name': td[2].text,  # 姓名
+                    'beginDate': td[3].text,  # 开始日期
+                    'className': td[4].text,  # 课程名
+                    'grade': td[5].a.text,  # 成绩
+                    'gradeDetail': td[5].a['onclick'],  # 成绩详情地址td[5].a['onclick']
+                    'gradeFlag': td[6].text,  # 成绩标志
+                    'courseNature': td[7].text,  # 课程性质
+                    'courseCategory': td[8].text,  # 课程类别
+                    'classHour': td[9].text,  # 学时
+                    'classgrade': td[10].text,  # 学分
+                    'examinationNature': td[11].text,  # 考试性质
+                    'other': ""  # 补重学期
+                }
             json[str(self.flag)] = temp
             self.flag += 1
         return json
 
     def queryallcj(self, date):
         self.flag = 0
-        json = self.querycj1(date)
+        try:
+            json = self.querycj1(date)
+        except AttributeError:
+            return {
+                "code": -1,
+                "msg": "服务器错误"
+            }
         data = self.dealsoup(json['soup'])
         for i in range(1, json['toatalPage']):
             temp = self.querycj2(json['soup'], i + 1)
