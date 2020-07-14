@@ -108,6 +108,12 @@ class querycj():
         json = {}
         for i in tr:
             td = i.find_all('td')
+            if td[5].a is None:
+                garde = 0
+                gradeDetail = ""
+            else:
+                garde = td[5].a.text
+                gradeDetail = td[5].a['onclick']
             try:
                 temp = {
                     'id': str(int(td[0].text)),  # 序号
@@ -115,8 +121,8 @@ class querycj():
                     'name': td[2].text,  # 姓名
                     'beginDate': td[3].text,  # 开始日期
                     'className': td[4].text,  # 课程名
-                    'grade': td[5].a.text,  # 成绩
-                    'gradeDetail': td[5].a['onclick'],  # 成绩详情地址td[5].a['onclick']
+                    'grade': garde,  # 成绩
+                    'gradeDetail': gradeDetail,  # 成绩详情地址td[5].a['onclick']
                     'gradeFlag': td[6].text,  # 成绩标志
                     'courseNature': td[7].text,  # 课程性质
                     'courseCategory': td[8].text,  # 课程类别
